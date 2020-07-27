@@ -3,7 +3,7 @@ class Player
     attr_reader :health
     attr_accessor :name
 
-    def initialize(name, health=100)
+    def initialize(name, health=rand(80..100))
         @name = name.capitalize
         @health = health
     end
@@ -28,6 +28,10 @@ class Player
 
     def strong?
         @health > 100
+    end
+
+    def <=>(other)
+        other.score <=> score
     end
 
 end
