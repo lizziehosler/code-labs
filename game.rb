@@ -31,11 +31,10 @@ class Game
 
 
         1.upto(rounds) do |round|
-            puts "\nRound #{round}:"
+            puts "\nRound #{round}:\n"
 
             @players.each do |player|
                 GameTurn.take_turn(player)
-                puts player
             end
         end
     end
@@ -44,11 +43,26 @@ class Game
         puts "#{player.name} (#{player.health})"
     end
 
+    def total_points
+        @players.reduce(0) do |sum, player|
+            sum + player.points
+        end
+    end
+            
+
     def print_stats
         strong_players = @players.select {|player| player.strong?}
         wimpy_players = @players.reject {|player| player.strong?}
 
-        puts "#{@title} Statistics:"
+        puts "\n#{@title} Statistics:"
+
+        @players.sort.each do |player|
+            puts "\n#{player.name}'s point totals:"
+            player.each_found_treasure do |treasure|
+                puts "#{treasure.points} total #{treasure.name} points."
+            end
+            puts "#{player.points} grand total points"
+        end
 
         puts "\n#{strong_players.size} strong players:"
         strong_players.each do |player|
@@ -59,6 +73,8 @@ class Game
         wimpy_players.each do |player|
             print_name_and_health(player)
         end
+
+        puts "\n#{total_points} total points from treasures found."
 
         puts "\n#{@title} High Scores:"
         @players.sort.each do |player|
