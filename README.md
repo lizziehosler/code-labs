@@ -1,1 +1,1 @@
-# code-labs
+Example game application from Pragmatic Studio's Ruby course.
